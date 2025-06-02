@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongo_data:/data/db
+    ports: ["27017:27017"]
+
+  core-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      MONGO_URI: mongodb://root:admin@mongodb:27017/core_db
+      IAM_BASE_URL: http://iam-service:8000   # آدرس داخلی سرویس IAM
+      IAM_PUBLIC_KEY_URL: http://iam-service:8000/.well-known/jwks.json
+    depends_on:
+      - mongodb
+    ports: ["8001:8000"]   # خارجی ← داخلی
+
+volumes:
+  mongo_data:
