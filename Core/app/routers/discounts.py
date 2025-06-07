@@ -5,14 +5,15 @@ from datetime import datetime
 from app.schemas import DiscountIn, DiscountOut
 from app.deps import get_db, CurrentAdmin
 from app.routers._utils import fix_objectid
+import decimal
 
 router = APIRouter(prefix="/discounts", tags=["discounts"])
 
 @router.post("/", response_model=DiscountOut, status_code=status.HTTP_201_CREATED)
 async def add_discount(data: DiscountIn, db=Depends(get_db), admin=Depends(CurrentAdmin)):
-    # دادهٔ ورودی: code, percentage, max_uses, expiration_date, is_active
     doc = data.model_dump()
-    # تاریخ فعلی را هم ذخیره می‌کنیم (اختیاری)
+    if isinstance(doc.get("percentage"), decimal.Decimal):
+        doc["percentage"] = float(doc["percentage"])  
     doc["created_at"] = datetime.utcnow()
     res = await db.discounts.insert_one(doc)
     doc["_id"] = res.inserted_id

@@ -1,7 +1,7 @@
 # app/schemas.py
 
 from pydantic import BaseModel, Field, condecimal, validator
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 
 # --- مدل‌های محصول ---
@@ -79,11 +79,15 @@ class DiscountIn(BaseModel):
     is_active: bool = True
 
     @validator("expiration_date")
-    def must_be_future(cls, v):
-        from datetime import datetime
-        if v <= datetime.utcnow():
-            raise ValueError("expiration_date must be after now")
+    def must_be_future(v: datetime):
+        if v <= datetime.now(timezone.utc):
+            raise ValueError("expiration_date must be in the future")
         return v
+    # def must_be_future(cls, v):
+    #     from datetime import datetime
+    #     if v <= datetime.utcnow():
+    #         raise ValueError("expiration_date must be after now")
+    #     return v
 
 class DiscountOut(DiscountIn):
     id: str = Field(..., alias="_id")
