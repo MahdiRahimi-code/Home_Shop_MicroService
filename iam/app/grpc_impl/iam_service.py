@@ -7,7 +7,8 @@ from Database import SessionLocal
 from iam_pb2 import (
     AdminCheckResponse,
     DeleteUserResponse,
-    BanUserResponse
+    BanUserResponse,
+    UpdateUserResponse
 )
 
 class IAMService(IAMServiceServicer):
@@ -55,4 +56,23 @@ class IAMService(IAMServiceServicer):
             db.commit()
             return BanUserResponse(success=True)
         return BanUserResponse(success=False)
+    
+    async def UpdateUser(self, request, context):
+        db = SessionLocal()
+        try:
+            user = db.query(User).filter(User.id == request.user_id).first()
+            if not user:
+                context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+
+            for key, value in request.fields.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+
+            db.commit()
+            return UpdateUserResponse(ok=True)
+
+        except Exception as e:
+            context.abort(grpc.StatusCode.INTERNAL, f"Update failed: {e}")
+        finally:
+            db.close()
 

@@ -4,6 +4,8 @@ from bson import ObjectId
 from app.deps import get_db
 from app.schemas import ProductOut
 from app.routers._utils import fix_objectid
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+from bson import ObjectId, errors as bson_errors
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -18,8 +20,19 @@ async def visit_product(product_id: str, db=Depends(get_db)):
 
 
 @router.get("/", response_model=list[ProductOut])
-async def list_products(category_id: str | None = None, db=Depends(get_db)):
-    query = {"category_id": category_id} if category_id else {}
+async def list_products(
+    category_id: str | None = Query(None, description="Filter by category _id"),
+    db=Depends(get_db),
+):
+    query: dict = {}
+    if category_id:
+        try:
+            query["category_id"] = ObjectId(category_id)
+        except bson_errors.InvalidId:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="`category_id` is not a valid ObjectId"
+            )
     cursor = db.products.find(query).sort("created_at", -1)
     result = []
     async for doc in cursor:

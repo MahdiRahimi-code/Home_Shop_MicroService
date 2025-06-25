@@ -1,0 +1,6 @@
+rpc UploadProfilePicture(UploadProfilePictureRequest) returns (MediaResponse);
+  rpc RemoveProfilePicture(RemovePictureRequest) returns (MediaResponse);
+  rpc UploadProductImage(UploadProductImageRequest) returns (MediaResponse);
+  rpc RemoveProductImage(RemovePictureRequest) returns (MediaResponse);
+
+from . import media_pb2 as media__pb2

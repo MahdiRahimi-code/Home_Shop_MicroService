@@ -5,6 +5,9 @@ from app.config import settings
 from app.iam_client import stub  # gRPC stub
 from app.iam import iam_pb2  # gRPC message definitions
 from jose import jwt, JWTError
+from app.media import media_pb2, media_pb2_grpc
+from settings import settings
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://localhost:8000/user/iam/login")
 
@@ -90,6 +93,19 @@ async def get_current_admin(token: str = Depends(oauth2_scheme_admin)) -> dict:
 
 CurrentAdmin = get_current_admin
 
+
+import grpc
+from app.iam import iam_pb2_grpc
+from settings import IAM_GRPC_HOST, IAM_GRPC_PORT
+from app.media import media_pb2_grpc
+
+async def get_iam_stub() -> iam_pb2_grpc.IAMServiceStub:
+    channel = grpc.aio.insecure_channel(f"{IAM_GRPC_HOST}:{IAM_GRPC_PORT}")
+    return iam_pb2_grpc.IAMServiceStub(channel)
+
+async def get_media_stub():
+    channel = grpc.aio.insecure_channel(f"{settings.MEDIA_GRPC_HOST}:{settings.MEDIA_GRPC_PORT}")
+    return media_pb2_grpc.MediaServiceStub(channel)
 
 # # app/deps.py
 

@@ -3,7 +3,8 @@
 import grpc
 import warnings
 
-from . import iam_pb2 as iam__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from . import media_pb2 as media__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
@@ -18,14 +19,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in iam_pb2_grpc.py depends on'
+        + f' but the generated code in media_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class IAMServiceStub(object):
+class MediaServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -34,107 +35,107 @@ class IAMServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetUser = channel.unary_unary(
-                '/iam.IAMService/GetUser',
-                request_serializer=iam__pb2.GetUserRequest.SerializeToString,
-                response_deserializer=iam__pb2.GetUserResponse.FromString,
+        self.UploadProfilePicture = channel.unary_unary(
+                '/media.MediaService/UploadProfilePicture',
+                request_serializer=media__pb2.UploadProfilePictureRequest.SerializeToString,
+                response_deserializer=media__pb2.UploadMediaResponse.FromString,
                 _registered_method=True)
-        self.UpdateUser = channel.unary_unary(
-                '/iam.IAMService/UpdateUser',
-                request_serializer=iam__pb2.UpdateUserRequest.SerializeToString,
-                response_deserializer=iam__pb2.UpdateUserResponse.FromString,
+        self.RemoveProfilePicture = channel.unary_unary(
+                '/media.MediaService/RemoveProfilePicture',
+                request_serializer=media__pb2.RemoveProfilePictureRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
-        self.CheckAdmin = channel.unary_unary(
-                '/iam.IAMService/CheckAdmin',
-                request_serializer=iam__pb2.AdminCheckRequest.SerializeToString,
-                response_deserializer=iam__pb2.AdminCheckResponse.FromString,
+        self.UploadProductImage = channel.unary_unary(
+                '/media.MediaService/UploadProductImage',
+                request_serializer=media__pb2.UploadProductImageRequest.SerializeToString,
+                response_deserializer=media__pb2.UploadMediaResponse.FromString,
                 _registered_method=True)
-        self.DeleteUser = channel.unary_unary(
-                '/iam.IAMService/DeleteUser',
-                request_serializer=iam__pb2.DeleteUserRequest.SerializeToString,
-                response_deserializer=iam__pb2.DeleteUserResponse.FromString,
+        self.RemoveProductImage = channel.unary_unary(
+                '/media.MediaService/RemoveProductImage',
+                request_serializer=media__pb2.RemoveProductImageRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
-        self.BanUser = channel.unary_unary(
-                '/iam.IAMService/BanUser',
-                request_serializer=iam__pb2.BanUserRequest.SerializeToString,
-                response_deserializer=iam__pb2.BanUserResponse.FromString,
+        self.SaveProfilePictureMeta = channel.unary_unary(
+                '/media.MediaService/SaveProfilePictureMeta',
+                request_serializer=media__pb2.ProfilePictureMetaRequest.SerializeToString,
+                response_deserializer=media__pb2.UploadMediaResponse.FromString,
                 _registered_method=True)
 
 
-class IAMServiceServicer(object):
+class MediaServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetUser(self, request, context):
+    def UploadProfilePicture(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def UpdateUser(self, request, context):
+    def RemoveProfilePicture(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CheckAdmin(self, request, context):
+    def UploadProductImage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def DeleteUser(self, request, context):
+    def RemoveProductImage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def BanUser(self, request, context):
+    def SaveProfilePictureMeta(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_IAMServiceServicer_to_server(servicer, server):
+def add_MediaServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUser,
-                    request_deserializer=iam__pb2.GetUserRequest.FromString,
-                    response_serializer=iam__pb2.GetUserResponse.SerializeToString,
+            'UploadProfilePicture': grpc.unary_unary_rpc_method_handler(
+                    servicer.UploadProfilePicture,
+                    request_deserializer=media__pb2.UploadProfilePictureRequest.FromString,
+                    response_serializer=media__pb2.UploadMediaResponse.SerializeToString,
             ),
-            'UpdateUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateUser,
-                    request_deserializer=iam__pb2.UpdateUserRequest.FromString,
-                    response_serializer=iam__pb2.UpdateUserResponse.SerializeToString,
+            'RemoveProfilePicture': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveProfilePicture,
+                    request_deserializer=media__pb2.RemoveProfilePictureRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
-            'CheckAdmin': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckAdmin,
-                    request_deserializer=iam__pb2.AdminCheckRequest.FromString,
-                    response_serializer=iam__pb2.AdminCheckResponse.SerializeToString,
+            'UploadProductImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.UploadProductImage,
+                    request_deserializer=media__pb2.UploadProductImageRequest.FromString,
+                    response_serializer=media__pb2.UploadMediaResponse.SerializeToString,
             ),
-            'DeleteUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteUser,
-                    request_deserializer=iam__pb2.DeleteUserRequest.FromString,
-                    response_serializer=iam__pb2.DeleteUserResponse.SerializeToString,
+            'RemoveProductImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveProductImage,
+                    request_deserializer=media__pb2.RemoveProductImageRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
-            'BanUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.BanUser,
-                    request_deserializer=iam__pb2.BanUserRequest.FromString,
-                    response_serializer=iam__pb2.BanUserResponse.SerializeToString,
+            'SaveProfilePictureMeta': grpc.unary_unary_rpc_method_handler(
+                    servicer.SaveProfilePictureMeta,
+                    request_deserializer=media__pb2.ProfilePictureMetaRequest.FromString,
+                    response_serializer=media__pb2.UploadMediaResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'iam.IAMService', rpc_method_handlers)
+            'media.MediaService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('iam.IAMService', rpc_method_handlers)
+    server.add_registered_method_handlers('media.MediaService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class IAMService(object):
+class MediaService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetUser(request,
+    def UploadProfilePicture(request,
             target,
             options=(),
             channel_credentials=None,
@@ -147,9 +148,9 @@ class IAMService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/iam.IAMService/GetUser',
-            iam__pb2.GetUserRequest.SerializeToString,
-            iam__pb2.GetUserResponse.FromString,
+            '/media.MediaService/UploadProfilePicture',
+            media__pb2.UploadProfilePictureRequest.SerializeToString,
+            media__pb2.UploadMediaResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -161,7 +162,7 @@ class IAMService(object):
             _registered_method=True)
 
     @staticmethod
-    def UpdateUser(request,
+    def RemoveProfilePicture(request,
             target,
             options=(),
             channel_credentials=None,
@@ -174,9 +175,9 @@ class IAMService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/iam.IAMService/UpdateUser',
-            iam__pb2.UpdateUserRequest.SerializeToString,
-            iam__pb2.UpdateUserResponse.FromString,
+            '/media.MediaService/RemoveProfilePicture',
+            media__pb2.RemoveProfilePictureRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -188,7 +189,7 @@ class IAMService(object):
             _registered_method=True)
 
     @staticmethod
-    def CheckAdmin(request,
+    def UploadProductImage(request,
             target,
             options=(),
             channel_credentials=None,
@@ -201,9 +202,9 @@ class IAMService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/iam.IAMService/CheckAdmin',
-            iam__pb2.AdminCheckRequest.SerializeToString,
-            iam__pb2.AdminCheckResponse.FromString,
+            '/media.MediaService/UploadProductImage',
+            media__pb2.UploadProductImageRequest.SerializeToString,
+            media__pb2.UploadMediaResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -215,7 +216,7 @@ class IAMService(object):
             _registered_method=True)
 
     @staticmethod
-    def DeleteUser(request,
+    def RemoveProductImage(request,
             target,
             options=(),
             channel_credentials=None,
@@ -228,9 +229,9 @@ class IAMService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/iam.IAMService/DeleteUser',
-            iam__pb2.DeleteUserRequest.SerializeToString,
-            iam__pb2.DeleteUserResponse.FromString,
+            '/media.MediaService/RemoveProductImage',
+            media__pb2.RemoveProductImageRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -242,7 +243,7 @@ class IAMService(object):
             _registered_method=True)
 
     @staticmethod
-    def BanUser(request,
+    def SaveProfilePictureMeta(request,
             target,
             options=(),
             channel_credentials=None,
@@ -255,9 +256,9 @@ class IAMService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/iam.IAMService/BanUser',
-            iam__pb2.BanUserRequest.SerializeToString,
-            iam__pb2.BanUserResponse.FromString,
+            '/media.MediaService/SaveProfilePictureMeta',
+            media__pb2.ProfilePictureMetaRequest.SerializeToString,
+            media__pb2.UploadMediaResponse.FromString,
             options,
             channel_credentials,
             insecure,

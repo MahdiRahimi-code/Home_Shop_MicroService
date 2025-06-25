@@ -56,10 +56,6 @@ app.openapi = custom_openapi
 
 
 
-
-
-
-
 # # app/main.py
 # from fastapi import FastAPI
 # from app.routers import products, wishlist, profile, categories, addresses, payments, admin

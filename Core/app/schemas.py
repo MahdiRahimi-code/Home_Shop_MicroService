@@ -55,7 +55,29 @@ class ProductOut(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
-# --- مدل‌های دسته‌بندی ---
+
+
+class BasketItem(BaseModel):
+    product_id: str
+    quantity: int
+
+class ReceiptOut(BaseModel):
+    id: str             
+    user_id: int
+    items: List[BasketItem]
+    total_price: float
+    address_id: str
+    created_at: datetime
+    estimated_delivery: datetime
+    status: str
+
+    class Config:
+        model_config = {
+            "populate_by_name": True,
+            "extra": "ignore"
+        }
+
+
 
 class CategoryIn(BaseModel):
     name: str

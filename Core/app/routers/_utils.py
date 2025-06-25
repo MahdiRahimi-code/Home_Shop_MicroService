@@ -14,10 +14,21 @@ from bson import ObjectId
 def fix_objectid(doc: dict) -> dict:
     if "_id" in doc and not isinstance(doc["_id"], str):
         doc["_id"] = str(doc["_id"])
-    for field in ["category_id", "discount_id"]:
+    for field in ("category_id", "discount_id", "address_id"):
         if field in doc and isinstance(doc[field], ObjectId):
             doc[field] = str(doc[field])
         elif field not in doc:
             doc[field] = None
     return doc
+
+
+# def fix_objectid(doc: dict) -> dict:
+#     if "_id" in doc and not isinstance(doc["_id"], str):
+#         doc["_id"] = str(doc["_id"])
+#     for field in ["category_id", "discount_id"]:
+#         if field in doc and isinstance(doc[field], ObjectId):
+#             doc[field] = str(doc[field])
+#         elif field not in doc:
+#             doc[field] = None
+#     return doc
 

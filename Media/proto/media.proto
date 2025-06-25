@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package media;
+
+import "google/protobuf/empty.proto";
+
+
+service MediaService {
+  rpc UploadProfilePicture(UploadProfilePictureRequest) returns (UploadMediaResponse);
+  rpc RemoveProfilePicture(RemoveProfilePictureRequest) returns (google.protobuf.Empty);
+  rpc UploadProductImage(UploadProductImageRequest) returns (UploadMediaResponse);
+  rpc RemoveProductImage(RemoveProductImageRequest) returns (google.protobuf.Empty);
+  rpc SaveProfilePictureMeta(ProfilePictureMetaRequest) returns (UploadMediaResponse);
+
+}
+
+message UploadProfilePictureRequest {
+  int32 user_id = 1;
+  string filename = 2;
+  bytes data = 3;
+}
+
+message UploadProductImageRequest {
+  string product_id = 1;
+  string filename = 2;
+  bytes data = 3;
+}
+
+message RemovePictureRequest {
+  string image_url = 1;
+}
+
+message MediaResponse {
+  string url = 1;
+  string message = 2;
+}
+
+message ProfilePictureMetaRequest {
+  int64 user_id = 1;
+  string filename = 2;
+}
+
+
+message RemoveProfilePictureRequest {
+  int64 user_id = 1;
+}
+
+
+message RemoveProductImageRequest {
+  string media_id = 1;
+}
+
+message UploadMediaResponse {
+  string media_id = 1;
+  string url = 2;
+}
